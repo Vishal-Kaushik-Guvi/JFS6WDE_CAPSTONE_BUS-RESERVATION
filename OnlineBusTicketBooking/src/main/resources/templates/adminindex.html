@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Admin Dashboard</h2>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Admin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/routes">Manage Routes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/buslist">Bus Lists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="mt-4">
+            <h3>Add Bus</h3>
+            <form action="addBus" method="post">
+                <div class="form-group">
+                    <label for="busName">Bus Name</label>
+                    <input type="text" class="form-control" id="busName" name="busName" placeholder="Enter bus name" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverName">Driver Name</label>
+                    <input type="text" class="form-control" id="driverName" name="driverName" placeholder="Enter driver name" required>
+                </div>
+                <div class="form-group">
+                    <label for="busType">Bus Type</label>
+                    <input type="text" class="form-control" id="busType" name="busType" placeholder="Enter bus type" required>
+                </div>
+                <div class="form-group">
+                    <label for="routeFrom">Route From</label>
+                    <input type="text" class="form-control" id="routeFrom" name="routeFrom" placeholder="Enter starting point" required>
+                </div>
+                <div class="form-group">
+                    <label for="routeTo">Route To</label>
+                    <input type="text" class="form-control" id="routeTo" name="routeTo" placeholder="Enter destination" required>
+                </div>
+                <div class="form-group">
+                    <label for="busJourneyDate">Journey Date</label>
+                    <input type="date" class="form-control" id="busJourneyDate" name="busJourneyDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="arrivalTime">Arrival Time</label>
+                    <input type="time" class="form-control" id="arrivalTime" name="arrivalTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="departureTime">Departure Time</label>
+                    <input type="time" class="form-control" id="departureTime" name="departureTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="seats">Total Seats</label>
+                    <input type="number" class="form-control" id="seats" name="seats" placeholder="Enter total seats" required>
+                </div>
+                <div class="form-group">
+                    <label for="fare">Fare</label>
+                    <input type="number" class="form-control" id="fare" name="fare" placeholder="Enter fare" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Bus</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

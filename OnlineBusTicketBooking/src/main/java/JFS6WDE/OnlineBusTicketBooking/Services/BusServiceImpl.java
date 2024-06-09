@@ -1,30 +1,34 @@
 package JFS6WDE.OnlineBusTicketBooking.Services;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import JFS6WDE.OnlineBusTicketBooking.Entities.Bus;
 import JFS6WDE.OnlineBusTicketBooking.Entities.Route;
 import JFS6WDE.OnlineBusTicketBooking.Exception.AdminException;
 import JFS6WDE.OnlineBusTicketBooking.Exception.ResourceNotFound;
 import JFS6WDE.OnlineBusTicketBooking.Repository.BusRepository;
 import JFS6WDE.OnlineBusTicketBooking.Repository.RouteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BusServiceImpl implements BusService {
     @Autowired
     private BusRepository busRepo;
+
     @Autowired(required = false)
     private RouteRepository routeRepo;
 
-    // admin access methods
+    // Admin methods
     @Override
-    public Bus addBus(Bus bus, String key) throws ResourceNotFound, AdminException {
+    public Bus addBus(Bus bus) throws ResourceNotFound, AdminException {
         // Check if the route already exists
         Route existingRoute = routeRepo.findByRouteFromAndRouteTo(bus.getRouteFrom(), bus.getRouteTo());
         Route route;
@@ -51,7 +55,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Bus updateBus(Bus bus, String key) throws ResourceNotFound {
+    public Bus updateBus(Bus bus) throws ResourceNotFound {
         Optional<Bus> busOptional = busRepo.findById(bus.getBusId());
         if (!busOptional.isPresent()) {
             throw new ResourceNotFound("Bus doesn't exist with busId: " + bus.getBusId());
@@ -74,7 +78,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Bus deleteBus(Integer busId, String key) throws ResourceNotFound, AdminException {
+    public Bus deleteBus(Integer busId) throws ResourceNotFound, AdminException {
         Optional<Bus> bus = busRepo.findById(busId);
 
         if (bus.isPresent()) {
@@ -83,18 +87,18 @@ public class BusServiceImpl implements BusService {
             // can't delete / or seats are reserved or not
             if (LocalDate.now().isBefore(existingBus.getBusJourneyDate())
                     && existingBus.getAvailableSeats() != existingBus.getSeats()) {
-                throw new ResourceNotFound("Can't delete scheduled and reserved bus.");
+                throw new AdminException("Can't delete scheduled and reserved bus.");
             }
 
             busRepo.delete(existingBus);
             return existingBus;
 
-        } else
+        } else {
             throw new ResourceNotFound("Bus not found with busId: " + busId);
-
+        }
     }
 
-    // admin + user access methods
+    // Admin + User methods
     @Override
     public List<Bus> viewAllBuses() throws ResourceNotFound {
         List<Bus> busList = busRepo.findAll();
@@ -122,4 +126,12 @@ public class BusServiceImpl implements BusService {
         return busListType;
     }
 
+    @Override
+	public Page<Bus> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+		// check if the sorting is ascending or descending
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+				: Sort.by(sortField).descending();
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+		return busRepo.findAll(pageable);
+	}
 }

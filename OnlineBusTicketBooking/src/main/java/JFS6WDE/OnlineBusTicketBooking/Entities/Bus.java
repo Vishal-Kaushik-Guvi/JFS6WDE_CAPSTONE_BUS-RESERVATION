@@ -31,6 +31,7 @@ public class Bus {
     private String driverName;
 
     @NotBlank(message = "Bus Type can't be null/blank, Please provide a valid bus type")
+    //deulex or Normal
     private String busType;
 
     @NotBlank(message = "Choose a valid starting point.")

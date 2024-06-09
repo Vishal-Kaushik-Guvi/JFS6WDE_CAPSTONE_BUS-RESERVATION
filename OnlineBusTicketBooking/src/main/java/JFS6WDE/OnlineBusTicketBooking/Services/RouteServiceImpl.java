@@ -21,7 +21,7 @@ public class RouteServiceImpl implements RouteService{
 	
 	
 	@Override
-	public Route addRoute(Route route,String key) throws ResourceNotFound, AdminException {
+	public Route addRoute(Route route) throws ResourceNotFound, AdminException {
 		
 		Route newRoute = routerepository.findByRouteFromAndRouteTo(route.getRouteFrom(), route.getRouteTo());
 		
@@ -53,7 +53,7 @@ public class RouteServiceImpl implements RouteService{
 	}
 
 	@Override
-	public Route updateRoute(Route route,String key) throws ResourceNotFound, AdminException {
+	public Route updateRoute(Route route) throws ResourceNotFound, AdminException {
 		Optional<Route> existedRoute = routerepository.findById(route.getRouteID());
 		if(existedRoute.isPresent()) {
 			
@@ -71,7 +71,7 @@ public class RouteServiceImpl implements RouteService{
 	
 	
 	@Override
-	public Route deleteRoute(int routeID,String key) throws ResourceNotFound, AdminException {
+	public Route deleteRoute(int routeID) throws ResourceNotFound, AdminException {
 		Optional<Route> route=routerepository.findById(routeID);
 		
 		if(route.isPresent()) {

@@ -28,14 +28,19 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
+                        authorize.requestMatchers("/register/**", "/saveAdmin/**", "/js/**", "/css/**", "/img/**").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                .defaultSuccessUrl("/index")
+                                .permitAll()
+                ).formLogin(
+                        form -> form
+                                .loginPage("/adminLogin")
+                                .loginProcessingUrl("/adminLogin")
+                                .defaultSuccessUrl("/adminIndex")
                                 .permitAll()
                 ).logout(
                         logout -> logout
@@ -44,7 +49,7 @@ public class SpringSecurity {
                 );
         return http.build();
     }
-
+    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth

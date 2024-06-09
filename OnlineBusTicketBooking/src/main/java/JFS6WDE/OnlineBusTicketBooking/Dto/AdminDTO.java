@@ -8,7 +8,11 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class AdminLoginDTO {
+public class AdminDTO {
+    @NotNull(message = "Name can not be null!")
+    @NotBlank(message = "Name can not be blank!")
+    private String name;
+    
     @Email
     private String email;
 

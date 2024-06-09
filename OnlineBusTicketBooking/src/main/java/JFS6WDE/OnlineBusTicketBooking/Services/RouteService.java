@@ -8,12 +8,10 @@ import JFS6WDE.OnlineBusTicketBooking.Exception.ResourceNotFound;
 
 public interface RouteService {
     
-	public Route addRoute(Route route,String key) throws ResourceNotFound, AdminException;
+	public Route addRoute(Route route) throws ResourceNotFound, AdminException;
 	public List<Route> viewAllRoute() throws ResourceNotFound;
 	public Route viewRoute(int routeId) throws ResourceNotFound;
-	public Route updateRoute(Route route,String key) throws ResourceNotFound, AdminException;
-	public Route deleteRoute(int routeID,String key) throws ResourceNotFound, AdminException;
-	
-	
+	public Route updateRoute(Route route) throws ResourceNotFound, AdminException;
+	public Route deleteRoute(int routeID) throws ResourceNotFound, AdminException;
 	
 }

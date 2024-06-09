@@ -1,15 +1,12 @@
 package JFS6WDE.OnlineBusTicketBooking.Repository;
 
-import java.util.List;
-
+import JFS6WDE.OnlineBusTicketBooking.Entities.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import JFS6WDE.OnlineBusTicketBooking.Entities.Admin;
+import java.util.Optional;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
-//    public Admin findByEmail(String email);
-	List<Admin> findByEmail(String email);
-    
+    Optional<Admin> findByEmail(String email);
 }

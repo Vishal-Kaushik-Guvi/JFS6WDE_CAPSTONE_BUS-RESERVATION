@@ -43,8 +43,7 @@ public class ReservationServiceImpl implements ReservationService{
           Reservation reservation = new Reservation();
 
           if(dto.getJourneyDate().isBefore(LocalDate.now())) throw  new ResourceNotFound("Journey Date should be in Future");
-
-          reservation.setSource(dto.getSource());
+          
           reservation.setDestination(dto.getDestination());
           reservation.setDate(dto.getJourneyDate());
           reservation.setStatus("Successful");
@@ -126,7 +125,6 @@ public class ReservationServiceImpl implements ReservationService{
         reservation.setDestination(dto.getDestination()) ;
         reservation.setFare(bus.getFare());
         reservation.setJourneyDate(dto.getJourneyDate());
-        reservation.setSource(dto.getSource());
         reservation.setDate(LocalDate.now());
         reservation.setTime(LocalTime.now());        
         

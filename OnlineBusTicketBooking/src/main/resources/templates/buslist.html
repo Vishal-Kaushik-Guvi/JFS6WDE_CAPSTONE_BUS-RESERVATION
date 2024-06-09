@@ -90,7 +90,7 @@
 <!-- Tabular data with pagination -->
 <div class="container my-5">
     <div class="text-center">
-        <h1>Bus List for User</h1>
+        <h1>Admin Dashboard</h1>
     </div>
     <div class="table-container">
         <table class="table table-striped table-responsive-md">
@@ -151,6 +151,7 @@
                         Fare
                     </a>
                 </th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -166,6 +167,13 @@
                     <td th:text="${bus.seats}">Total Seats</td>
                     <td th:text="${bus.availableSeats}">Available Seats</td>
                     <td th:text="${bus.fare}">Fare</td>
+                <td>
+                    <a th:href="@{/updateBus(busId=${bus.busId})}" class="btn btn-primary btn-sm">Update</a>
+                    <form th:action="@{/deleteEmployee}" method="post" style="display:inline;">
+                        <input type="hidden" name="busId" th:value="${bus.busId}"/>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
