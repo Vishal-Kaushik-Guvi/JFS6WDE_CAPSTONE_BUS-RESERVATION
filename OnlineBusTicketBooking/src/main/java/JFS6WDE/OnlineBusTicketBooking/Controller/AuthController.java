@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import JFS6WDE.OnlineBusTicketBooking.Dto.UserDto;
 import JFS6WDE.OnlineBusTicketBooking.Entities.User;
-import JFS6WDE.OnlineBusTicketBooking.Services.UserService;
+import JFS6WDE.OnlineBusTicketBooking.Services.UserServiceImpl;
 import jakarta.validation.Valid;
 
 @Controller
 public class AuthController {
  
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
+    
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {

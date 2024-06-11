@@ -1,54 +1,92 @@
-package JFS6WDE.OnlineBusTicketBooking.Services;
+// package JFS6WDE.OnlineBusTicketBooking.Services;
 
-import JFS6WDE.OnlineBusTicketBooking.Dto.AdminDTO;
-import JFS6WDE.OnlineBusTicketBooking.Entities.Admin;
-import JFS6WDE.OnlineBusTicketBooking.Repository.AdminRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+// import JFS6WDE.OnlineBusTicketBooking.Dto.AdminDTO;
+// import JFS6WDE.OnlineBusTicketBooking.Entities.Admin;
+// import JFS6WDE.OnlineBusTicketBooking.Entities.Role;
+// import JFS6WDE.OnlineBusTicketBooking.Repository.AdminRepository;
+// import JFS6WDE.OnlineBusTicketBooking.Repository.RoleRepository;
 
-import java.util.List;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.stereotype.Service;
 
-@Service
-public class AdminServiceImpl implements AdminService {
+// import java.util.Arrays;
+// import java.util.List;
+// import java.util.stream.Collectors;
 
-    @Autowired
-    private AdminRepository adminRepository;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
-    @Override
-    public Admin createAdmin(AdminDTO adminDTO) {
-        Admin admin = new Admin();
-        admin.setName(adminDTO.getName());
-        admin.setEmail(adminDTO.getEmail());
-        admin.setPassword(adminDTO.getPassword());
-        return adminRepository.save(admin);
-    }
+// @Service
+// public class AdminServiceImpl implements AdminService {
 
-    @Override
-    public Admin updateAdmin(Integer adminID, AdminDTO adminDTO) {
-        Admin admin = adminRepository.findById(adminID).orElseThrow(() -> new RuntimeException("Admin not found"));
-        admin.setName(adminDTO.getName());
-        admin.setEmail(adminDTO.getEmail());
-        admin.setPassword(adminDTO.getPassword());
-        return adminRepository.save(admin);
-    }
+//     private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
-    @Override
-    public void deleteAdmin(Integer adminID) {
-        adminRepository.deleteById(adminID);
-    }
+//     @Autowired
+//     private AdminRepository adminRepository;
 
-    @Override
-    public List<Admin> getAllAdmins() {
-        return adminRepository.findAll();
-    }
+//     @Autowired
+//     private PasswordEncoder passwordEncoder;
 
-    @Override
-    public Admin getAdminById(Integer adminID) {
-        return adminRepository.findById(adminID).orElseThrow(() -> new RuntimeException("Admin not found"));
-    }
+//     @Autowired
+//     RoleRepository roleRepository;
 
-    @Override
-    public Admin getAdminByEmail(String email) {
-        return adminRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Admin not found"));
-    }
-}
+//     @Override
+//     public void createAdmin(AdminDTO adminDTO) {
+//         logger.info("Creating admin: {}", adminDTO.getEmail());
+//         Admin admin = new Admin();
+//         admin.setName(adminDTO.getName());
+//         admin.setEmail(adminDTO.getEmail());
+//         admin.setPassword(passwordEncoder.encode(adminDTO.getPassword())); // Encode password
+
+//         try {
+//             adminRepository.save(admin);
+//         } catch (Exception e) {
+//             logger.error("Error occurred while saving admin", e);
+//             throw e;
+//         }
+
+//         Role role = roleRepository.findByName("ROLE_ADMIN");
+//         if (role == null) {
+//             role = checkRoleExist();
+//         }
+//         admin.setRoles(Arrays.asList(role));
+
+//         try {
+//             adminRepository.save(admin);
+//             logger.info("Admin created successfully: {}", adminDTO.getEmail());
+//         } catch (Exception e) {
+//             logger.error("Error occurred while saving admin roles", e);
+//             throw e;
+//         }
+//     }
+
+//     @Override
+//     public Admin findUserByEmail(String email) {
+//         logger.info("Finding admin by email: {}", email);
+//         return adminRepository.findByEmail(email);
+//     }
+
+//     @Override
+//     public List<AdminDTO> getAllAdmins() {
+//         logger.info("Retrieving all admins");
+//         List<Admin> admins = adminRepository.findAll();
+//         return admins.stream()
+//                 .map(this::mapToUserDto)
+//                 .collect(Collectors.toList());
+//     }
+
+//     private AdminDTO mapToUserDto(Admin admin) {
+//         AdminDTO adminDto = new AdminDTO();
+//         String[] str = admin.getName().split(" ");
+//         adminDto.setName(str[0]);
+//         adminDto.setEmail(admin.getEmail());
+//         return adminDto;
+//     }
+
+//     private Role checkRoleExist() {
+//         Role role = new Role();
+//         role.setName("ROLE_ADMIN");
+//         return roleRepository.save(role);
+//     }
+// }

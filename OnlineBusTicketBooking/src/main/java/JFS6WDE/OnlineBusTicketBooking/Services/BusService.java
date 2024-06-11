@@ -9,14 +9,14 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 public interface BusService {
-    Bus addBus(Bus bus) throws ResourceNotFound, AdminException;
+    Bus createBus(Bus bus) throws ResourceNotFound, AdminException;
 
     Bus updateBus(Bus bus) throws ResourceNotFound;
 
-    Bus deleteBus(Integer busId) throws ResourceNotFound, AdminException;
+    Bus deleteBus(long busId) throws ResourceNotFound, AdminException;
 
 
-    Bus viewBus(Integer busId) throws ResourceNotFound;
+    Bus viewBus(long busId) throws ResourceNotFound;
 
     List<Bus> viewBusByBusType(String busType) throws ResourceNotFound;
 

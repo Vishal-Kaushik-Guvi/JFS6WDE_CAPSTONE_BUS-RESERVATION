@@ -7,14 +7,14 @@ import JFS6WDE.OnlineBusTicketBooking.Entities.Reservation;
 import JFS6WDE.OnlineBusTicketBooking.Exception.ResourceNotFound;
 
 public interface ReservationService {
-    public Reservation addReservation(ReservationDto dto, String key) throws ResourceNotFound;
+    public Reservation addReservation(ReservationDto dto) throws ResourceNotFound;
 
-    public Reservation viewReservation(Integer rid, String key) throws ResourceNotFound;
+    public Reservation viewReservation(long rid) throws ResourceNotFound;
 
-    public List<Reservation> getAllReservation(String key) throws ResourceNotFound;
+    public List<Reservation> getAllReservation() throws ResourceNotFound;
 
-    public Reservation deleteReservation(Integer rid, String key) throws ResourceNotFound;
+    public Reservation deleteReservation(long rid) throws ResourceNotFound;
 
-    public Reservation updateReservation(Integer rid, ReservationDto dto, String key) throws ResourceNotFound;
+    public Reservation updateReservation(long rid, ReservationDto dto) throws ResourceNotFound;
 
 }

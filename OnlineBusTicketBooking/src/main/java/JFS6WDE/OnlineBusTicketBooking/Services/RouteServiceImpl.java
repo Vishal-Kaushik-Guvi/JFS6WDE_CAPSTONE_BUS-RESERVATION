@@ -46,7 +46,7 @@ public class RouteServiceImpl implements RouteService{
 			
 	}
 	@Override
-	public Route viewRoute(int routeId) throws ResourceNotFound {
+	public Route viewRoute(long routeId) throws ResourceNotFound {
 		 Optional<Route> opt=routerepository.findById(routeId);
 
 		 return opt.orElseThrow(()->new ResourceNotFound("There is no route present of this  routeId :" + routeId));
@@ -71,7 +71,7 @@ public class RouteServiceImpl implements RouteService{
 	
 	
 	@Override
-	public Route deleteRoute(int routeID) throws ResourceNotFound, AdminException {
+	public Route deleteRoute(long routeID) throws ResourceNotFound, AdminException {
 		Optional<Route> route=routerepository.findById(routeID);
 		
 		if(route.isPresent()) {

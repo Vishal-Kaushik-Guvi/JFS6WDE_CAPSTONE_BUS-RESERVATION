@@ -10,7 +10,7 @@
 <body>
     <div class="container mt-5">
         <h2>Update Bus</h2>
-        <form action="/admin/bus/update" method="post">
+        <form action="bus/update" method="post">
             <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
             <input type="hidden" th:name="busId" th:value="${bus.busId}" />
             <div class="form-group">

@@ -28,7 +28,7 @@ public class BusServiceImpl implements BusService {
 
     // Admin methods
     @Override
-    public Bus addBus(Bus bus) throws ResourceNotFound, AdminException {
+    public Bus createBus(Bus bus) throws ResourceNotFound, AdminException {
         // Check if the route already exists
         Route existingRoute = routeRepo.findByRouteFromAndRouteTo(bus.getRouteFrom(), bus.getRouteTo());
         Route route;
@@ -72,13 +72,24 @@ public class BusServiceImpl implements BusService {
         // Update other bus fields if necessary
         existingBus.setBusName(bus.getBusName());
         existingBus.setBusType(bus.getBusType());
+        existingBus.setArrivalTime(bus.getArrivalTime());
+        existingBus.setAvailableSeats(bus.getAvailableSeats());
+        existingBus.setBusJourneyDate(bus.getBusJourneyDate());
+        existingBus.setFare(bus.getFare());
+        existingBus.setDriverName(bus.getDriverName());
+        existingBus.setDistance(bus.getDistance());
+        existingBus.setDepartureTime(bus.getDepartureTime());
+        existingBus.setRouteFrom(bus.getRouteFrom());
+        existingBus.setRouteTo(bus.getRouteTo());
+        existingBus.setSeats(bus.getSeats());
+
         // Add other fields that need to be updated
 
         return busRepo.save(existingBus);
     }
 
     @Override
-    public Bus deleteBus(Integer busId) throws ResourceNotFound, AdminException {
+    public Bus deleteBus(long busId) throws ResourceNotFound, AdminException {
         Optional<Bus> bus = busRepo.findById(busId);
 
         if (bus.isPresent()) {
@@ -109,7 +120,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Bus viewBus(Integer busId) throws ResourceNotFound {
+    public Bus viewBus(long busId) throws ResourceNotFound {
         Optional<Bus> existingBus = busRepo.findById(busId);
         if (!existingBus.isPresent()) {
             throw new ResourceNotFound("No bus exist with this busId: " + busId);

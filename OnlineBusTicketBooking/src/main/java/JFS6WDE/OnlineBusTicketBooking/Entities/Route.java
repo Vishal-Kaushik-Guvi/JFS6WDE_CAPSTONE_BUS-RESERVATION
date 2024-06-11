@@ -25,7 +25,7 @@ import java.util.List;
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer routeID;
+    private long routeID;
 
     @NotNull(message = "Start point cannot be null !")
 	@NotBlank(message = "Start point cannot be blank !")
@@ -36,6 +36,7 @@ public class Route {
 	@NotBlank(message = "Destination point cannot be blank !")
 	@NotEmpty(message = "Destination point cannot be empty !")
     private String routeTo;
+    
     private Integer distance;
 
     @JsonIgnore

@@ -10,8 +10,8 @@ public interface RouteService {
     
 	public Route addRoute(Route route) throws ResourceNotFound, AdminException;
 	public List<Route> viewAllRoute() throws ResourceNotFound;
-	public Route viewRoute(int routeId) throws ResourceNotFound;
+	public Route viewRoute(long routeId) throws ResourceNotFound;
 	public Route updateRoute(Route route) throws ResourceNotFound, AdminException;
-	public Route deleteRoute(int routeID) throws ResourceNotFound, AdminException;
+	public Route deleteRoute(long routeID) throws ResourceNotFound, AdminException;
 	
 }

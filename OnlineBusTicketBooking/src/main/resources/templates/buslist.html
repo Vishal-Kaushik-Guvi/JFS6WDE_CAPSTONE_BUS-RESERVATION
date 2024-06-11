@@ -82,8 +82,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <h1>List of the Buses</h1>
+            <h1>Manage Buses</h1>
         </a>
+    </div>
+    <div class="ml-auto">
+        <a href="/logout" class="btn btn-danger">Logout</a>
     </div>
 </nav>
 
@@ -148,6 +151,11 @@
                 </th>
                 <th>
                     <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                        Distance(in kms)
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
                         Fare
                     </a>
                 </th>
@@ -166,6 +174,7 @@
                     <td th:text="${bus.departureTime}">Departure Time</td>
                     <td th:text="${bus.seats}">Total Seats</td>
                     <td th:text="${bus.availableSeats}">Available Seats</td>
+                    <td th:text="${bus.distance}">Distance (in kms)</td>
                     <td th:text="${bus.fare}">Fare</td>
                 <td>
                     <a th:href="@{/updateBus(busId=${bus.busId})}" class="btn btn-primary btn-sm">Update</a>

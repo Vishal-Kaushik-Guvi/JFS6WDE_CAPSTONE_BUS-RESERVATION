@@ -22,7 +22,7 @@ import java.util.List;
 public class Bus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer busId;
+    private long busId;
 
     @NotBlank(message = "Bus name can't be null/blank, Please provide a valid name first!")
     private String busName;
@@ -53,10 +53,12 @@ public class Bus {
     @Column(name = "total_seats")
     private Integer seats;
 
+    @Column(name = "available_seats")
     private Integer availableSeats;
 
-    @NotNull(message = "fare can't be null")
-    private Integer fare;
+    private int distance;
+    
+    private Integer fare = 10*distance;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Route route;

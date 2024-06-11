@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import JFS6WDE.OnlineBusTicketBooking.Entities.Bus;
 
 @Repository
-public interface BusRepository extends JpaRepository<Bus,Integer> {
+public interface BusRepository extends JpaRepository<Bus,Long> {
    public List<Bus> findByBusType(String busType);
 
    public Bus findByRouteFromAndRouteTo(String routeFrom, String routeTo);

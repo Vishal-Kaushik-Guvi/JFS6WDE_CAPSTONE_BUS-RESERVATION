@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Employee Management Application</title>
+    <title>Bus Management Application</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
@@ -84,9 +84,13 @@
         <a class="navbar-brand" href="#">
             <h1>List of the Buses</h1>
         </a>
+        <div class="ml-auto">
+            <a href="/addBus" class="btn btn-primary">Add Bus</a>
+            <a href="/reservation" class="btn btn-info">Reservation</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
     </div>
 </nav>
-
 <!-- Tabular data with pagination -->
 <div class="container my-5">
     <div class="text-center">

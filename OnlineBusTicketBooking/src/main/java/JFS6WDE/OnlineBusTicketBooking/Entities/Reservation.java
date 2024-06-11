@@ -15,7 +15,7 @@ import java.time.LocalTime;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer reservationID;
+    private long reservationID;
 
     // successfull or unsuccssefull
     private String status;

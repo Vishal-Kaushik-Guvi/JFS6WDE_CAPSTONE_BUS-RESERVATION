@@ -1,23 +1,21 @@
-package JFS6WDE.OnlineBusTicketBooking.Dto;
+// package JFS6WDE.OnlineBusTicketBooking.Dto;
 
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import lombok.Data;
+// import jakarta.validation.constraints.Email;
+// import jakarta.validation.constraints.NotBlank;
+// import jakarta.validation.constraints.NotNull;
+// import lombok.Data;
 
-@Data
-public class AdminDTO {
-    @NotNull(message = "Name can not be null!")
-    @NotBlank(message = "Name can not be blank!")
-    private String name;
+// @Data
+// public class AdminDTO {
+//     @NotNull(message = "Name can not be null!")
+//     @NotBlank(message = "Name can not be blank!")
+//     private String name;
     
-    @Email
-    private String email;
+//     @Email
+//     private String email;
 
-    @NotNull(message="Password can not be null!")
-    @NotBlank(message= "Password can not be blank!")
-    @Pattern(regexp = "[A-Za-z0-9!@#$%^&*_]{8,15}", message = "Password must be 8-15 characters including alphanumerics and special characters")
-    private String password;
-}
+//     @NotNull(message="Password can not be null!")
+//     @NotBlank(message= "Password can not be blank!")
+//     private String password;
+// }

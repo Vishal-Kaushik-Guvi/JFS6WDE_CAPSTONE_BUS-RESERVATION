@@ -26,13 +26,13 @@ public class ReservationServiceImpl implements ReservationService{
     
 
     @Override
-    public Reservation addReservation(ReservationDto dto, String key) throws ResourceNotFound {
+    public Reservation addReservation(ReservationDto dto) throws ResourceNotFound {
         
         Bus bus = busRepository.findByRouteFromAndRouteTo(dto.getSource(), dto.getDestination());
         
         if(bus == null) throw new ResourceNotFound("Bus not found for the given starting to destination");
         
-        Integer availableSeats = bus.getAvailableSeats();
+        int availableSeats = bus.getAvailableSeats();
         
         if(availableSeats < dto.getBookedSeat()) throw new ResourceNotFound("Only " + availableSeats + " seats are available");
         
@@ -58,7 +58,7 @@ public class ReservationServiceImpl implements ReservationService{
     }
  
     @Override
-    public Reservation viewReservation(Integer rid, String key) throws ResourceNotFound {
+    public Reservation viewReservation(long rid) throws ResourceNotFound {
 
         Optional<Reservation> optional = reservationRepository.findById(rid);
 
@@ -68,7 +68,7 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public List<Reservation> getAllReservation(String key) throws ResourceNotFound {
+    public List<Reservation> getAllReservation() throws ResourceNotFound {
 
         List<Reservation> list = reservationRepository.findAll();
 
@@ -78,7 +78,7 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public Reservation deleteReservation(Integer rid, String key) throws ResourceNotFound{
+    public Reservation deleteReservation(long rid) throws ResourceNotFound{
     	Optional<Reservation> optional =  reservationRepository.findById(rid);  
     	
     	if(optional.isEmpty()) throw new ResourceNotFound("Reservation not found with the given id: " + rid);
@@ -87,7 +87,7 @@ public class ReservationServiceImpl implements ReservationService{
     	
     	if(reservation.getJourneyDate().isBefore(LocalDate.now())) throw new ResourceNotFound("Reservation Already Expired");
     	
-    	Integer n = reservation.getBus().getAvailableSeats();
+    	int n = reservation.getBus().getAvailableSeats();
     	
     	reservation.getBus().setAvailableSeats(n + reservation.getBookedSeat());
     	
@@ -100,13 +100,13 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public Reservation updateReservation(Integer rid, ReservationDto dto, String key) throws ResourceNotFound {
+    public Reservation updateReservation(long rid, ReservationDto dto) throws ResourceNotFound {
         
         Bus bus = busRepository.findByRouteFromAndRouteTo(dto.getSource(), dto.getDestination());
         
         if(bus == null) throw new ResourceNotFound("Bus not found for the given starting to destination");
         
-        Integer availableSeats = bus.getAvailableSeats();
+        int availableSeats = bus.getAvailableSeats();
         
         if(availableSeats < dto.getBookedSeat()) throw new ResourceNotFound("Only " + availableSeats + " seats are available");
         

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +26,16 @@ public class BusController {
         return "index";
     }
 
+    @GetMapping("/addBus")
+    public String addBusForm() {
+        return "addbus";
+    }
+
     @PostMapping("/addBus")
-    public String addBus(Bus bus){
-       busService.addBus(bus);
-       return "adminindex";
+    public String addBus(Bus bus, Model model) {
+        busService.createBus(bus);
+        model.addAttribute("success", true);
+        return "addbus"; 
     }
     
     @GetMapping("/")
@@ -44,7 +51,7 @@ public class BusController {
     }
 
     @GetMapping("/bus/{id}")
-    public String showEditBusForm(@PathVariable("id") Integer id, Model model) {
+    public String showUpdateBusForm(@PathVariable("id") long id, Model model) {
         Bus bus = busService.viewBus(id);
         model.addAttribute("bus", bus);
         return "updatebus";
@@ -56,8 +63,8 @@ public class BusController {
         return "redirect:/admin/bus/list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteBus(@PathVariable("id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public String deleteBus(@PathVariable("id") long id) {
         busService.deleteBus(id);
         return "redirect:/admin/bus/list";
     }
