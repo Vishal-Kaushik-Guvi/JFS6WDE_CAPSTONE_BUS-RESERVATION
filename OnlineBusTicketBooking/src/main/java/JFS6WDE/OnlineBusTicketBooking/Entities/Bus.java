@@ -1,7 +1,5 @@
 package JFS6WDE.OnlineBusTicketBooking.Entities;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -53,17 +50,10 @@ public class Bus {
     @Column(name = "total_seats")
     private Integer seats;
 
-    @Column(name = "available_seats")
-    private Integer availableSeats;
-
     private int distance;
     
-    private Integer fare = 10*distance;
+    private Integer fare;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Route route;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "bus",cascade = CascadeType.ALL)
-    private List<Reservation> reservationList = new ArrayList<>();
+    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
+private List<BookingHistory> bookingHistoryList = new ArrayList<>();
 }

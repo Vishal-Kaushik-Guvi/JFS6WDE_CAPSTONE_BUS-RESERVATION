@@ -11,5 +11,5 @@ import JFS6WDE.OnlineBusTicketBooking.Entities.Bus;
 public interface BusRepository extends JpaRepository<Bus,Long> {
    public List<Bus> findByBusType(String busType);
 
-   public Bus findByRouteFromAndRouteTo(String routeFrom, String routeTo);
+   List<Bus> findByRouteFromAndRouteTo(String routeFrom, String routeTo);
 }

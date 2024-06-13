@@ -13,14 +13,15 @@ public interface BusService {
 
     Bus updateBus(Bus bus) throws ResourceNotFound;
 
-    Bus deleteBus(long busId) throws ResourceNotFound, AdminException;
+    void deleteBus(long busId) throws ResourceNotFound, AdminException;
 
-
-    Bus viewBus(long busId) throws ResourceNotFound;
+    Bus viewBusById(long busId) throws ResourceNotFound;
 
     List<Bus> viewBusByBusType(String busType) throws ResourceNotFound;
 
     List<Bus> viewAllBuses() throws ResourceNotFound;
 
     Page<Bus> findPaginated(int pageNo,int pageSize,String sortField,String sortDirection);
+
+    List<Bus> findByRouteFromAndRouteTo(String routeFrom, String routeTo);
 }

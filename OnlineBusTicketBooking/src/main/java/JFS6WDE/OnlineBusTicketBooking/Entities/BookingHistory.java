@@ -1,24 +1,35 @@
 package JFS6WDE.OnlineBusTicketBooking.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookingHistory {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private int id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-private String username;
+    @ManyToOne
+    @JoinColumn(name = "bus_id")
+    private Bus bus;
 
+    private String routeFrom;
+    private String routeTo;
+    private Integer distance;
+    private Integer fare;
 
+    private LocalDate bookingDate;
+    private LocalTime bookingTime;
 }

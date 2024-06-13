@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Employee Management Application</title>
+    <title>Bus Management Application</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
@@ -84,9 +84,11 @@
         <a class="navbar-brand" href="#">
             <h1>Manage Buses</h1>
         </a>
-    </div>
-    <div class="ml-auto">
-        <a href="/logout" class="btn btn-danger">Logout</a>
+        <div class="ml-auto">
+            <a href="/showRoute" class="btn btn-primary">Show Route</a>
+            <a href="/addBus" class="btn btn-primary">Add Bus</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
     </div>
 </nav>
 
@@ -100,63 +102,58 @@
             <thead>
             <tr>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=busName&sortDir=' + ${reverseSortDir}}">
                         Bus Name
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=driverName&sortDir=' + ${reverseSortDir}}">
                         Driver Name
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=departmentName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=busType&sortDir=' + ${reverseSortDir}}">
                        Bus Type
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=routeFrom&sortDir=' + ${reverseSortDir}}">
                         Route From
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=routeTo&sortDir=' + ${reverseSortDir}}">
                         Route To
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=departmentName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=busJourneyDate&sortDir=' + ${reverseSortDir}}">
                         Journey Date
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=arrivalTime&sortDir=' + ${reverseSortDir}}">
                         Arrival Time
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=departureTime&sortDir=' + ${reverseSortDir}}">
                         Departure Time
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=departmentName&sortDir=' + ${reverseSortDir}}">
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=seats&sortDir=' + ${reverseSortDir}}">
                         Total Seats
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
-                        Available Seats
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=distance&sortDir=' + ${reverseSortDir}}">
+                        Distance (in kms)
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
-                        Distance(in kms)
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
-                        Fare
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=fare&sortDir=' + ${reverseSortDir}}">
+                        Fare (in Rs)
                     </a>
                 </th>
                 <th>Actions</th>
@@ -173,17 +170,16 @@
                     <td th:text="${bus.arrivalTime}">Arrival Time</td>
                     <td th:text="${bus.departureTime}">Departure Time</td>
                     <td th:text="${bus.seats}">Total Seats</td>
-                    <td th:text="${bus.availableSeats}">Available Seats</td>
                     <td th:text="${bus.distance}">Distance (in kms)</td>
-                    <td th:text="${bus.fare}">Fare</td>
-                <td>
-                    <a th:href="@{/updateBus(busId=${bus.busId})}" class="btn btn-primary btn-sm">Update</a>
-                    <form th:action="@{/deleteEmployee}" method="post" style="display:inline;">
-                        <input type="hidden" name="busId" th:value="${bus.busId}"/>
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                </td>
-            </tr>
+                    <td th:text="${bus.fare}">Fare (in Rs)</td>
+                    <td>
+                        <a th:href="@{/updateBus(busId=${bus.busId})}" class="btn btn-primary btn-sm">Update</a><br>
+                        <form th:action="@{/deleteBus}" method="post" style="display:inline;">
+                            <input type="hidden" name="busId" th:value="${bus.busId}"/>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
