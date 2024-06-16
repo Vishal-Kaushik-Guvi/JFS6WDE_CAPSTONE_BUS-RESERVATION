@@ -5,6 +5,45 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+    <style>
+        body{
+            background-color: lightgreen;
+        }
+        .form-group{
+            margin-top: 30px;
+            font-weight: bold;
+        }
+        .table{
+            background-color: white;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand h1 {
+            margin-left: 100px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            font-size: 2.5rem;
+            color: #ffffff;
+        }
+        .navbar-dark {
+            background-color: #000102;
+        }
+    </style>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <h1>List of the Buses With Specific Route</h1>
+        </a>
+        <div class="ml-auto">
+            <a href="/bookings/viewBookingHistory" class="btn btn-secondary">Booking History</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</nav>
+
     <div class="container mt-5">
         <h2>Search Buses by Route</h2>
         <form action="/searchBus" method="get">

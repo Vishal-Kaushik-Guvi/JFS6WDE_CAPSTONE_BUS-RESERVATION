@@ -73,8 +73,8 @@ public class BookingServiceImpl implements BookingService {
         bookingHistory.setRouteFrom(bus.getRouteFrom());
         bookingHistory.setRouteTo(bus.getRouteTo());
         bookingHistory.setDistance(bus.getDistance());
-        bookingHistory.setFare(bus.getFare());
-        
+        bookingHistory.setFare(bus.getFare()*bookingDto.getBookseat());
+
         bookingHistory.setBookseat(bookingDto.getBookseat());
         bookingHistory.setCardNumber(bookingDto.getCardNumber());
         bookingHistory.setUpiId(bookingDto.getUpiId());

@@ -10,7 +10,7 @@
             background-color: #a2db37;
         }
         .heading {
-            text-align: center;
+            margin-left: 450px;
         }
         .navbar-brand h1 {
             font-size: 2rem;
@@ -52,6 +52,7 @@
 </nav>
 
 <!-- Booking History Table -->
+ 
 <div class="container my-5">
     <div class="table-container">
         <h1 class="text-center">Booking History</h1>
@@ -63,10 +64,12 @@
                     <th>Route From</th>
                     <th>Route To</th>
                     <th>Distance</th>
+                    <th>Seat Booked</th>
                     <th>Fare</th>
                     <th>Booking Date</th>
                     <th>Booking Time</th>
                     <th>Action</th>
+        
                 </tr>
             </thead>
             <tbody>
@@ -76,13 +79,14 @@
                     <td th:text="${booking.routeFrom}">Route From</td>
                     <td th:text="${booking.routeTo}">Route To</td>
                     <td th:text="${booking.distance}">Distance (in kms)</td>
-                    <td th:text="${booking.fare}">Fare (in Rs)</td>
+                    <td th:text="${booking.bookseat}">Seat Booked</td>
+                    <td th:text="${booking.fare}">Fare (in Rs (fare * Number of Seats))</td>
                     <td th:text="${booking.bookingDate}">Booking Date</td>
                     <td th:text="${booking.bookingTime}">Booking Time</td>
                     <td>
                         <form th:action="@{/bookings/deleteBooking/{id}(id=${booking.id})}" method="post" style="display:inline;">
                             <input type="hidden" name="_csrf" th:value="${booking.id}"/>
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this booking?');">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this booking?');">Cancel Booking</button>
                         </form>
                     </td>
                 </tr>
