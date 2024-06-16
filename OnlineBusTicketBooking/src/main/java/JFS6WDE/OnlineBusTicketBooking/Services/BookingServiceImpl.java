@@ -3,11 +3,11 @@ package JFS6WDE.OnlineBusTicketBooking.Services;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import JFS6WDE.OnlineBusTicketBooking.Dto.BookingDto;
 import JFS6WDE.OnlineBusTicketBooking.Entities.BookingHistory;
 import JFS6WDE.OnlineBusTicketBooking.Entities.Bus;
 import JFS6WDE.OnlineBusTicketBooking.Entities.User;
@@ -29,7 +29,6 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BusRepository busRepository;
 
-
     @Override
     public List<BookingHistory> getAllBooking() {
         return bookingRepository.findAll();
@@ -42,36 +41,47 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingHistory getBookingById(long id) {
-        return bookingRepository.findById(id).get();
+        return bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Booking not found with id: " + id));
     }
-    // Main Functionality
 
     @Override
     @Transactional
-    public void bookBus(Long busId, String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new ResourceNotFound("User not found with email: " + email);
+    public void saveBooking(BookingDto bookingDto, String userEmail, long id) {
+        User user = userRepository.findByEmail(userEmail);
+    
+        Bus bus = busRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bus not found with ID: " + bookingDto.getId()));
+    
+        // Check if the requested number of seats is available
+        int availableSeats = bus.getSeats() - bus.getBookingHistoryList().stream()
+                .mapToInt(BookingHistory::getBookseat)
+                .sum();
+    
+        if (bookingDto.getBookseat() > availableSeats) {
+            throw new RuntimeException("Not enough seats available. Requested: " + bookingDto.getBookseat() + ", Available: " + availableSeats);
         }
-        Bus bus = busRepository.findById(busId)
-                .orElseThrow(() -> new ResourceNotFound("Invalid bus Id: " + busId));
 
-        // Ensure no duplicate booking
         List<BookingHistory> existingBookings = bookingRepository.findByUserAndBus(user, bus);
         if (!existingBookings.isEmpty()) {
             throw new IllegalArgumentException("Booking already exists for this user and bus.");
         }
+    
+        BookingHistory bookingHistory = new BookingHistory();
+        
+        bookingHistory.setUser(user);
+        bookingHistory.setBus(bus);
+        bookingHistory.setRouteFrom(bus.getRouteFrom());
+        bookingHistory.setRouteTo(bus.getRouteTo());
+        bookingHistory.setDistance(bus.getDistance());
+        bookingHistory.setFare(bus.getFare());
+        
+        bookingHistory.setBookseat(bookingDto.getBookseat());
+        bookingHistory.setCardNumber(bookingDto.getCardNumber());
+        bookingHistory.setUpiId(bookingDto.getUpiId());
 
-        BookingHistory booking = new BookingHistory();
-        booking.setUser(user);
-        booking.setBus(bus);
-        booking.setRouteFrom(bus.getRouteFrom());
-        booking.setRouteTo(bus.getRouteTo());
-        booking.setDistance(bus.getDistance());
-        booking.setFare(bus.getFare());
-        booking.setBookingDate(LocalDate.now());
-        booking.setBookingTime(LocalTime.now());
-        bookingRepository.save(booking);
+        bookingHistory.setBookingDate(LocalDate.now());
+        bookingHistory.setBookingTime(LocalTime.now());
+    
+        bookingRepository.save(bookingHistory);
     }
-
 }

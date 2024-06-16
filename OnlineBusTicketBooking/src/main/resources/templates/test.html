@@ -5,77 +5,77 @@
     <title>Bus Management Application</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <style>
-        body {
-            padding-top: 70px; /* Adjust for fixed navbar */
-            background-color: #a2db37;
-        }
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-        .navbar-brand h1 {
-            margin-left: 430px;
-            margin-bottom: 10px;
-            margin-top: 10px;
-            font-size: 2.5rem;
-            color: #ffffff;
-        }
-        .navbar-dark {
-            background-color: #000102;
-        }
-        .table-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-        .pagination-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .pagination a {
-            color: #343a40;
-            font-weight: bold;
-        }
-        .table thead th {
-            background-color: #343a40;
-            color: #ffffff;
-        }
-        .btn-info, .btn-primary, .btn-danger {
-            color: #ffffff;
-        }
-        .btn-info {
-            background-color: #17a2b8;
-            border: none;
-        }
-        .btn-info2 {
-            position: relative;
-            right: 480px; 
-            background-color: #343a40;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border: none;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            border: none;
-        }
-        .page-link {
-            color: #17a2b8;
-        }
-        .page-link:hover {
-            background-color: #f8f9fa;
-        }
-    </style>
+<style>
+  body {
+      padding-top: 70px; /* Adjust for fixed navbar */
+      background-color: #a2db37;
+  }
+  .navbar-brand {
+      display: flex;
+      align-items: center;
+  }
+  .navbar-brand h1 {
+      margin-left: 430px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      font-size: 2.5rem;
+      color: #ffffff;
+  }
+  .navbar-dark {
+      background-color: #000102;
+  }
+  .table-container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+  }
+  .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+  }
+  .pagination a {
+      color: #343a40;
+      font-weight: bold;
+  }
+  .table thead th {
+      background-color: #343a40;
+      color: #ffffff;
+  }
+  .btn-info, .btn-primary, .btn-danger {
+      color: #ffffff;
+  }
+  .btn-info {
+      background-color: #17a2b8;
+      border: none;
+  }
+  .btn-info2 {
+      position: relative;
+      right: 480px; 
+      background-color: #343a40;
+  }
+  .btn-primary {
+      background-color: #007bff;
+      border: none;
+  }
+  .btn-danger {
+      background-color: #dc3545;
+      border: none;
+  }
+  .btn-secondary {
+      background-color: #6c757d;
+      border: none;
+  }
+  .page-link {
+      color: #17a2b8;
+  }
+  .page-link:hover {
+      background-color: #f8f9fa;
+  }
+</style>
 </head>
 <body>
 <!-- Header part -->
@@ -86,7 +86,7 @@
         </a>
         <div class="ml-auto">
             <a href="/showRoute" class="btn btn-primary">Show Route</a>
-            <a href="/bookings/viewBookingHistory" class="btn btn-secondary">Booking History</a>
+            <a href="/viewBookingHistory" class="btn btn-secondary">Booking History</a>
             <a href="/logout" class="btn btn-danger">Logout</a>
         </div>
     </div>
@@ -172,13 +172,12 @@
                     <td th:text="${bus.distance}">Distance (in Kms)</td>
                     <td th:text="${bus.fare}">Fare (in Rs)</td>
                     <td>
-                        <form th:action="@{/bookings/addBooking}" method="get">
-                            <input type="hidden" name="busId" th:value="${bus.busId}">
-                            <button type="submit" class="btn btn-primary btn-sm">Book Now</button>
-                        </form>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bookModal" 
+                            th:attr="data-busid=${bus.busId}">Book Now</button>
                     </td>
                 </tr>
-            </tbody>           
+            </tbody>
+            
         </table>
     </div>
     <div th:if="${totalPages > 1}" class="pagination-container">
@@ -200,6 +199,47 @@
     </div>
 </div>
 
+<!-- Modal for Booking Form -->
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">Book Bus</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookForm" th:action="@{/book}" method="post">
+                    <input type="hidden" id="busId" name="busId">
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select class="form-control" id="paymentMethod" name="paymentMethod">
+                            <option value="card">Card</option>
+                            <option value="upi">UPI</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="cardDetails">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter card number">
+                        <label for="cvv" class="mt-2">CVV</label>
+                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV">
+                    </div>
+                    <div class="form-group" id="upiDetails" style="display: none;">
+                        <label for="upiId">UPI ID</label>
+                        <input type="text" class="form-control" id="upiId" name="upiId" placeholder="Enter UPI ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="seats">Number of Seats</label>
+                        <input type="number" class="form-control" id="seats" name="seats" placeholder="Enter number of seats" min="1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -209,6 +249,23 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+ni8XKzOZbKI2F3k6G8zKR49S8Ff4VVzq+zQZ6p3zgzR0PBpC7rP47kC" crossorigin="anonymous"></script>
 <script>
+    $('#bookModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var busId = button.data('busid'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('.modal-body #busId').val(busId);
+    });
+
+    $('#paymentMethod').change(function() {
+        if ($(this).val() == 'card') {
+            $('#cardDetails').show();
+            $('#upiDetails').hide();
+        } else {
+            $('#cardDetails').hide();
+            $('#upiDetails').show();
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const buttons = document.querySelectorAll('.book-btn');
         buttons.forEach(button => {

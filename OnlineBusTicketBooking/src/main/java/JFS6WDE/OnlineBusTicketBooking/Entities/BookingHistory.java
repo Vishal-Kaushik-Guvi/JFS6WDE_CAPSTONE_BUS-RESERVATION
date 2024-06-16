@@ -1,6 +1,8 @@
 package JFS6WDE.OnlineBusTicketBooking.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +32,17 @@ public class BookingHistory {
     private Integer distance;
     private Integer fare;
 
+    @Max(20)
+    private int bookseat;
+ 
+    @NotNull(message = "Card number cannot be null or empty")
+    @Column(name = "Bank_Card")
+    private String cardNumber;
+    
+    @Column(name = "Bank_Upi")
+    private String upiId;
+
     private LocalDate bookingDate;
     private LocalTime bookingTime;
+    
 }

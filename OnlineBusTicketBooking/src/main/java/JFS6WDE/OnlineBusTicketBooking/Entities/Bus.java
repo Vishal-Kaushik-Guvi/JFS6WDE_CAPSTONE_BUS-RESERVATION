@@ -54,6 +54,7 @@ public class Bus {
     
     private Integer fare;
 
-    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
+@OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
 private List<BookingHistory> bookingHistoryList = new ArrayList<>();
+
 }
